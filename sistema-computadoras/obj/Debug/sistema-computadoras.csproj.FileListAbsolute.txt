@@ -1,0 +1,6 @@
+C:\Users\User\Documents\SharpDevelop Projects\sistema-computadoras\sistema-computadoras\obj\Debug\sistema-computadoras.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\SharpDevelop Projects\sistema-computadoras\sistema-computadoras\bin\Debug\sistema-computadoras.exe.config
+C:\Users\User\Documents\SharpDevelop Projects\sistema-computadoras\sistema-computadoras\bin\Debug\sistema-computadoras.exe
+C:\Users\User\Documents\SharpDevelop Projects\sistema-computadoras\sistema-computadoras\bin\Debug\sistema-computadoras.pdb
+C:\Users\User\Documents\SharpDevelop Projects\sistema-computadoras\sistema-computadoras\obj\Debug\sistema-computadoras.exe
+C:\Users\User\Documents\SharpDevelop Projects\sistema-computadoras\sistema-computadoras\obj\Debug\sistema-computadoras.pdb
