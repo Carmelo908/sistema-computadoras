@@ -12,7 +12,6 @@ namespace sistema_computadoras
 		private readonly DateTime fechaIngreso;
 		private readonly TiposComputadora tipoComputadora;
 		public string estudianteAsignado;
-		public string notas;
 		public string signos;
 		public string estado;
 		public string diagnostico = "";
