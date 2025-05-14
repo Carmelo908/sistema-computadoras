@@ -11,14 +11,20 @@ namespace Trimestre
   {
   	private FormComputadora form = new FormComputadora();
   	
-  	private Button BotonGuardar = new Button();
-  	private Button BotonMostrar = new Button();
+  	private Button botonGuardar = new Button();
+  	private Button botonMostrar = new Button();
   	
     public MainForm()
     {
-    	FlowLayoutPanel
-    	Controls.Add(form);
-    	AutoSize = true;
+    	FlowLayoutPanel panelMain = new FlowLayoutPanel();
+    	panelMain.AutoSize = true;
+    	panelMain.Controls.Add(form);
+    	panelMain.FlowDirection = FlowDirection.TopDown;
+    	Controls.Add(panelMain);
+    	FlowLayoutPanel panelBotones = new FlowLayoutPanel();
+    	
+    	panelMain.Controls.Add(botonGuardar);
+    	panelMain.Controls.Add(botonMostrar);
     }
   }
 }
