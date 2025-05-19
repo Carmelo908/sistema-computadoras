@@ -14,16 +14,27 @@ using sistema_computadoras;
 
 namespace sistema_computadoras
 {
+	public class ItemAula
+	{
+		public Aulas id { get; set; }
+    	public string nombre { get; set; }
+
+    	public override string ToString() { return nombre; }
+	}
+	
 	public class FormComputadora : TableLayoutPanel
 	{
 		protected RadioButton laptopRadio = new RadioButton();
 		protected RadioButton escritorioRadio = new RadioButton();
 		protected TextBox campoEstudiante = new TextBox();
-		protected TextBox campoIdentificacion = new TextBox();
+		protected ComboBox campoAula = new ComboBox();
+		protected NumericUpDown campoNumero = new NumericUpDown();
 		protected TextBox campoSignos = new TextBox();
 		protected TextBox campoEstado = new TextBox();
+		protected TextBox campoDiagnostico = new TextBox();
 		protected DateTimePicker campoIngreso = new DateTimePicker();
-		
+		protected DateTimePicker campoFechaReparacion = new DateTimePicker();
+		protected CheckBox checkboxReparado = new CheckBox();
 		protected TiposComputadora tipoComputadora;
 		
 		public FormComputadora()
@@ -37,10 +48,17 @@ namespace sistema_computadoras
 		protected void crearTabla()
 		{
 			Controls.Add(crearCeldaTipo(), 0, 0);
-			Controls.Add(crearCeldaEstudianteID(), 1, 0);
+			Controls.Add(crearCeldaReparacion(), 1, 0);
+			
 			Controls.Add(crearCeldaSignos(), 0, 1);
 			Controls.Add(crearCeldaEstado(), 1, 1);
+			
 			Controls.Add(crearCeldaIngreso(), 0, 2);
+			Controls.Add(crearCeldaEstudiante(), 1, 2);
+			
+			Controls.Add(crearCeldaDiagnostico(), 0, 3);
+			Controls.Add(crearCeldaAulaNumero(), 1, 3);
+			
 		}
 		
 		protected void configurarLayout()
@@ -62,6 +80,16 @@ namespace sistema_computadoras
 			escritorioRadio.Text = "Escritorio";
 			escritorioRadio.Checked = true;
 			laptopRadio.Text = "Laptop";
+		}
+		
+		protected void crearComboAulas()
+		{
+			campoAula.Items.Add(new ItemAula { id = Aulas.aula6, nombre = "Aula 6"});
+			campoAula.Items.Add(new ItemAula { id = Aulas.aula14, nombre = "Aula 14"});
+			campoAula.Items.Add(new ItemAula { id = Aulas.aula15, nombre = "Aula 15"});
+			campoAula.Items.Add(new ItemAula { id = Aulas.aula16, nombre = "Aula 16" });
+			campoAula.Items.Add(new ItemAula { id = Aulas.biblioteca, nombre = "Biblioteca"});
+			campoAula.Items.Add(new ItemAula { id = Aulas.administracion, nombre = "Administración"});
 		}
 		
 		protected Label crearEtiqueta(string texto)
@@ -91,17 +119,14 @@ namespace sistema_computadoras
 			return seleccionTipo;
 		}
 		
-		protected FlowLayoutPanel crearCeldaEstudianteID()
+		protected FlowLayoutPanel crearCeldaEstudiante()
 		{
 			campoEstudiante.Width = 150;
 			FlowLayoutPanel celdaEstudiante = crearCelda();
-			Label etiquetaEstudiante = crearEtiqueta("Estudiante a cargo:");
+			Label etiquetaEstudiante = crearEtiqueta("Estudiante o docente a cargo:");
 			Label etiquetaID = crearEtiqueta("Aula y número del equipo:");
-			campoIdentificacion.Width = 150;
 			celdaEstudiante.Controls.Add(etiquetaEstudiante);
 			celdaEstudiante.Controls.Add(campoEstudiante);
-			celdaEstudiante.Controls.Add(etiquetaID);
-			celdaEstudiante.Controls.Add(campoIdentificacion);
 			return celdaEstudiante;
 		}
 		
@@ -110,7 +135,7 @@ namespace sistema_computadoras
 			TextBox result = new TextBox();
 			result.Multiline = true;
 			result.Width = 180;
-			result.Height = 90;
+			result.Height = 75;
 			return result;
 		}
 		
@@ -134,6 +159,16 @@ namespace sistema_computadoras
 			return celdaEstado;
 		}
 		
+		protected FlowLayoutPanel crearCeldaDiagnostico()
+		{
+			FlowLayoutPanel celdaDiagnostico = crearCelda();
+			Label etiquetaDiagnostico = crearEtiqueta("Diagnostico:");
+			celdaDiagnostico.Controls.Add(etiquetaDiagnostico);
+			campoDiagnostico = crearInputGrande();
+			celdaDiagnostico.Controls.Add(campoDiagnostico);
+			return celdaDiagnostico;
+		}
+		
 		protected FlowLayoutPanel crearCeldaIngreso()
 		{
 			campoIngreso.Width = 150;
@@ -143,19 +178,58 @@ namespace sistema_computadoras
 			celdaIngreso.Controls.Add(campoIngreso);
 			return celdaIngreso;
 		}
+
+		protected void clickCheckReparado(object sender, EventArgs e)
+		{
+			campoFechaReparacion.Enabled = checkboxReparado.Checked;
+		}
+
+		protected FlowLayoutPanel crearCeldaReparacion()
+		{
+			campoFechaReparacion.Width = 150;
+			checkboxReparado.Text = "Está reparado";
+			FlowLayoutPanel celdaReparacion = crearCelda();
+			celdaReparacion.Controls.Add(checkboxReparado);
+			Label etiquetaFechaReparacion = crearEtiqueta("Fecha de reparación: ");
+			celdaReparacion.Controls.Add(etiquetaFechaReparacion);
+			celdaReparacion.Controls.Add(campoFechaReparacion);
+			campoFechaReparacion.Enabled = false;
+			checkboxReparado.Click += clickCheckReparado;
+			return celdaReparacion;
+		}
+		
+		protected FlowLayoutPanel crearCeldaAulaNumero()
+		{
+			FlowLayoutPanel celdaAulaNumero = crearCelda();
+			Label etiquetaAula = crearEtiqueta("Aula del equipo: ");
+			celdaAulaNumero.Controls.Add(etiquetaAula);
+			celdaAulaNumero.Controls.Add(campoAula);
+			crearComboAulas();
+			Label etiquetaNumero = crearEtiqueta("Número del equipo");
+			celdaAulaNumero.Controls.Add(etiquetaNumero);
+			campoNumero.Minimum = 1;
+			campoNumero.Value = 1;
+			campoNumero.Maximum = 30;
+			celdaAulaNumero.Controls.Add(campoNumero);
+			return celdaAulaNumero;
+		}
 		
 		public InfoComputadora DevolverDatos()
 		{
-			TiposComputadora tipo = escritorioRadio.Checked ? 
-				TiposComputadora.escritorio : TiposComputadora.laptop;
-			DateTime fechaIngreso = campoIngreso.Value;
-			string id = campoIdentificacion.Text;
-			string estudiante = campoEstudiante.Text;
-			string signos = campoSignos.Text;
-			string diagnostico = "";
-			
-			return new InfoComputadora(tipo, fechaIngreso, id, estudiante, 
-			                           signos, diagnostico);
+			InfoComputadora result = new InfoComputadora {
+				fechaIngreso = campoIngreso.Value,
+				fechaReparación = campoFechaReparacion.Value,
+				tipoComputadora = escritorioRadio.Checked ? 
+					TiposComputadora.escritorio : TiposComputadora.laptop,
+				numeroComputadora = (int)campoNumero.Value,
+				aulaComputadora = ((ItemAula)campoAula.SelectedValue).id,
+				estudianteAsignado = campoEstudiante.Text,
+				signos = campoSignos.Text,
+				estado = campoEstado.Text,
+				diagnostico = campoDiagnostico.Text,
+				reparado = checkboxReparado.Checked,
+			};
+			return result;
 		}
 	}
 }

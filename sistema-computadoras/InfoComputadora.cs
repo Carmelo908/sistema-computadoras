@@ -1,33 +1,34 @@
 ﻿using System;
 
-public enum TiposComputadora{
+public enum TiposComputadora
+{
 	escritorio,
 	laptop
+}
+
+public enum Aulas
+{
+	aula6,
+	aula14,
+	aula15,
+	aula16,
+	biblioteca,
+	administracion
 }
 
 namespace sistema_computadoras
 {
 	public class InfoComputadora
 	{
-		private readonly DateTime fechaIngreso;
-		private TiposComputadora tipoComputadora;
-		public string id;
-		public string estudianteAsignado;
-		public string signos;
-		public string estado;
-		public string diagnostico = "";
-		public bool reparado = false;
-		
-		public InfoComputadora(TiposComputadora tipo, DateTime fechaIngreso, 
-		                       string id, string estudiante, string signos, 
-		                       string diagnostico)
-		{
-			this.fechaIngreso = fechaIngreso;
-			this.id = id;
-			this.tipoComputadora = tipo;
-			this.estudianteAsignado = estudiante;
-			this.signos = signos;
-			this.diagnostico = diagnostico;
-		}
+		public DateTime fechaIngreso { get; set; }
+		public DateTime fechaReparación { get; set; }
+		public TiposComputadora tipoComputadora { get; set; }
+		public int numeroComputadora { get; set; }
+		public Aulas aulaComputadora { get; set; }
+		public string estudianteAsignado { get; set; }
+		public string signos { get; set; }
+		public string estado { get; set; }	
+		public string diagnostico { get; set; }
+		public bool reparado { get; set; }
 	}
 }

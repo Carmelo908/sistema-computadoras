@@ -7,24 +7,18 @@ using sistema_computadoras;
 namespace Trimestre
 {
 	
-  public sealed partial class MainForm : Form
-  {
-  	private FormComputadora form = new FormComputadora();
+ 	public sealed partial class MainForm : Form
+	{
+  		private FormComputadora form = new FormComputadora();
   	
-  	private Button botonGuardar = new Button();
-  	private Button botonMostrar = new Button();
-  	
-    public MainForm()
-    {
-    	FlowLayoutPanel panelMain = new FlowLayoutPanel();
-    	panelMain.AutoSize = true;
-    	panelMain.Controls.Add(form);
-    	panelMain.FlowDirection = FlowDirection.TopDown;
-    	Controls.Add(panelMain);
-    	FlowLayoutPanel panelBotones = new FlowLayoutPanel();
-    	
-    	panelMain.Controls.Add(botonGuardar);
-    	panelMain.Controls.Add(botonMostrar);
-    }
-  }
+  		private Button botonGuardar = new Button { Text = "Guardar", Enabled = false };
+  		private Button botonMostrar = new Button { Text = "Mostrar" };
+
+    	public MainForm()
+    	{
+    		AutoSize = true;
+    		this.FormBorderStyle = FormBorderStyle.FixedDialog;
+    		Controls.Add(form);
+    	}
+	}
 }
