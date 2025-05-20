@@ -84,12 +84,10 @@ namespace sistema_computadoras
 		
 		protected void crearComboAulas()
 		{
-			campoAula.Items.Add(new ItemAula { id = Aulas.aula6, nombre = "Aula 6"});
-			campoAula.Items.Add(new ItemAula { id = Aulas.aula14, nombre = "Aula 14"});
-			campoAula.Items.Add(new ItemAula { id = Aulas.aula15, nombre = "Aula 15"});
-			campoAula.Items.Add(new ItemAula { id = Aulas.aula16, nombre = "Aula 16" });
-			campoAula.Items.Add(new ItemAula { id = Aulas.biblioteca, nombre = "Biblioteca"});
-			campoAula.Items.Add(new ItemAula { id = Aulas.administracion, nombre = "Administración"});
+			
+			campoAula.DataSource = Enum.GetValues(typeof(Aulas));
+			campoAula.DisplayMember = "nombre"; 
+			campoAula.ValueMember = "id";
 		}
 		
 		protected Label crearEtiqueta(string texto)
@@ -106,6 +104,7 @@ namespace sistema_computadoras
 			FlowLayoutPanel celda = new FlowLayoutPanel();
 			celda.FlowDirection = FlowDirection.TopDown;
 			celda.AutoSize = true;
+			celda.Padding = new Padding(10, 0, 10, 0);
 			return celda;
 		}
 			
@@ -214,21 +213,20 @@ namespace sistema_computadoras
 			return celdaAulaNumero;
 		}
 		
-		public InfoComputadora DevolverDatos()
+		public InfoComputadora devolverDatos()
 		{
-			InfoComputadora result = new InfoComputadora {
-				fechaIngreso = campoIngreso.Value,
-				fechaReparación = campoFechaReparacion.Value,
-				tipoComputadora = escritorioRadio.Checked ? 
-					TiposComputadora.escritorio : TiposComputadora.laptop,
-				numeroComputadora = (int)campoNumero.Value,
-				aulaComputadora = ((ItemAula)campoAula.SelectedValue).id,
-				estudianteAsignado = campoEstudiante.Text,
-				signos = campoSignos.Text,
-				estado = campoEstado.Text,
-				diagnostico = campoDiagnostico.Text,
-				reparado = checkboxReparado.Checked,
-			};
+			InfoComputadora result = new InfoComputadora();
+			result.fechaIngreso = campoIngreso.Value;
+			result.fechaReparación = campoFechaReparacion.Value;
+			result.tipoComputadora = escritorioRadio.Checked ? 
+				TiposComputadora.escritorio : TiposComputadora.laptop;
+			result.numeroComputadora = (int)campoNumero.Value;
+			result.aulaComputadora = (Aulas)campoAula.SelectedValue;
+			result.estudianteAsignado = campoEstudiante.Text;
+			result.signos = campoSignos.Text;
+			result.estado = campoEstado.Text;
+			result.diagnostico = campoDiagnostico.Text;
+			result.reparado = checkboxReparado.Checked;
 			return result;
 		}
 	}
